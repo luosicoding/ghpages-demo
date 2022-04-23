@@ -6,22 +6,20 @@ on:
       - "main"
 
 jobs:
-  build:
+  deploy:
+    name: deploy GH pages
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [16.x]
-    
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
       - name: Install and build
         run: npm install && npm run build
-      
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@4.1.1
         with:
-          branch: gh-pages # The branch the action should deploy to.
-          folder: build # The folder the action should deploy.  
+          branch: gh-pages
+          folder: build
